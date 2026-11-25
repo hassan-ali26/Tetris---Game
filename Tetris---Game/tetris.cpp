@@ -72,3 +72,20 @@ void readEvents(sf::RenderWindow& window) {
         }
     }
 }
+
+// drawText / drawBlock: small helpers
+
+void drawText(sf::RenderWindow& window, string str, float x, float y, int size, sf::Color color) {
+    sf::Text text(font, str, size);
+    text.setFillColor(color);
+    text.setPosition({ x, y });
+    window.draw(text);
+}
+
+// one square, 2 pixels smaller than the cell so the grid shows
+void drawBlock(sf::RenderWindow& window, float x, float y, float size, sf::Color color) {
+    sf::RectangleShape block({ size - 2, size - 2 });
+    block.setFillColor(color);
+    block.setPosition({ x + 1, y + 1 });
+    window.draw(block);
+}
