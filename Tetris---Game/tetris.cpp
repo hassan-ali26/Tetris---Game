@@ -89,3 +89,18 @@ void drawBlock(sf::RenderWindow& window, float x, float y, float size, sf::Color
     block.setPosition({ x + 1, y + 1 });
     window.draw(block);
 }
+
+// drawBoard: border, then every cell with two nested loops
+
+void drawBoard(sf::RenderWindow& window) {
+    sf::RectangleShape border({ COLS * CELL, ROWS * CELL });
+    border.setPosition({ BOARD_X, BOARD_Y });
+    border.setFillColor(sf::Color::Transparent);
+    border.setOutlineThickness(2);
+    border.setOutlineColor(sf::Color(120, 120, 180));
+    window.draw(border);
+
+    for (int r = 0; r < ROWS; r++)
+        for (int c = 0; c < COLS; c++)
+            drawBlock(window, BOARD_X + c * CELL, BOARD_Y + r * CELL, CELL, colors[board[r][c]]);
+}
