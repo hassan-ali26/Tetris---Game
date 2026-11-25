@@ -30,3 +30,45 @@ bool gameOver = false;
 
 int  score = 0, linesCleared = 0, level = 1;
 int  gameState = MENU;
+
+// For drawing and input (owner A)
+sf::Color colors[8] = { sf::Color(25, 25, 45),   // 0: empty cell
+                        sf::Color::Cyan,         // 1: I
+                        sf::Color::Yellow,       // 2: O
+                        sf::Color(170, 90, 255), // 3: T (purple)
+                        sf::Color::Green,        // 4: S
+                        sf::Color::Red,          // 5: Z
+                        sf::Color::Blue,         // 6: J
+                        sf::Color(255, 150, 0) };// 7: L (orange)
+sf::Font font;
+bool   piecesOk = false;     // false if pieces.txt could not be read
+char   pressedKey = 0;       // 'L' 'R' 'D' 'U' ' ' (drop), 'E' = Enter, 'X' = Esc
+int    menuChoice = NEW_GAME;
+string menuMessage = "";     // for example "No saved game"
+
+// readEvents: read the window events and keep the pressed key in pressedKey
+
+void readEvents(sf::RenderWindow& window) {
+    pressedKey = 0;
+    while (const optional event = window.pollEvent()) {
+        if (event->is<sf::Event::Closed>())
+            window.close();                        // X button ends the program
+        else if (const auto* key = event->getIf<sf::Event::KeyPressed>()) {
+            sf::Keyboard::Key k = key->code;
+            if (k == sf::Keyboard::Key::Left || k == sf::Keyboard::Key::A)
+                pressedKey = 'L';
+            else if (k == sf::Keyboard::Key::Right || k == sf::Keyboard::Key::D)
+                pressedKey = 'R';
+            else if (k == sf::Keyboard::Key::Down || k == sf::Keyboard::Key::S)
+                pressedKey = 'D';
+            else if (k == sf::Keyboard::Key::Up || k == sf::Keyboard::Key::W)
+                pressedKey = 'U';
+            else if (k == sf::Keyboard::Key::Space)
+                pressedKey = ' ';
+            else if (k == sf::Keyboard::Key::Enter)
+                pressedKey = 'E';
+            else if (k == sf::Keyboard::Key::Escape)
+                pressedKey = 'X';
+        }
+    }
+}
