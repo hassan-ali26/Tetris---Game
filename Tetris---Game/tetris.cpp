@@ -46,6 +46,36 @@ char   pressedKey = 0;       // 'L' 'R' 'D' 'U' ' ' (drop), 'E' = Enter, 'X' = E
 int    menuChoice = NEW_GAME;
 string menuMessage = "";     // for example "No saved game"
 
+// clearLines: after every lock, remove the full rows (all 10 cells not 0).
+// Every row above moves down by one and the top row becomes empty.
+
+int clearLines() {
+    int removed = 0;
+    int r = ROWS - 1;                          // start at the bottom row
+
+    while (r >= 0) {
+        bool full = true;                      // is every cell of this row used?
+        for (int c = 0; c < COLS; c++)
+            if (board[r][c] == 0) {
+                full = false;
+                break;
+            }
+
+        if (full) {
+            for (int rr = r; rr > 0; rr--)     // every row above moves down by one
+                for (int c = 0; c < COLS; c++)
+                    board[rr][c] = board[rr - 1][c];
+            for (int c = 0; c < COLS; c++)     // the top row becomes empty
+                board[0][c] = 0;
+            removed++;                         // do not change r: check this row again
+        }
+        else
+            r--;                               // not full: go one row up
+    }
+
+    return removed;
+}
+
 // readEvents: read the window events and keep the pressed key in pressedKey
 
 void readEvents(sf::RenderWindow& window) {
