@@ -76,6 +76,12 @@ int clearLines() {
     return removed;
 }
 
+// clearSaveFile: when a game ends, empty savegame.txt
+
+void clearSaveFile() {
+    ofstream fout("savegame.txt");             // opening for writing empties the file
+}
+
 // readEvents: read the window events and keep the pressed key in pressedKey
 
 void readEvents(sf::RenderWindow& window) {
