@@ -82,6 +82,26 @@ void clearSaveFile() {
     ofstream fout("savegame.txt");             // opening for writing empties the file
 }
 
+
+// loadPieces: read pieces.txt into pieces[7][4][4]
+// First the number of pieces, then every character with fin >> ...
+
+bool loadPieces() {
+    ifstream fin("pieces.txt");
+    if (!fin) return false;                        // file is missing
+
+    int howMany;
+    fin >> howMany;
+    if (howMany != 7) return false;
+
+    for (int p = 0; p < 7; p++)
+        for (int r = 0; r < 4; r++)
+            for (int c = 0; c < 4; c++)
+                fin >> pieces[p][r][c];
+
+    return !fin.fail();                            // false if the file was short
+}
+
 // readEvents: read the window events and keep the pressed key in pressedKey
 
 void readEvents(sf::RenderWindow& window) {
