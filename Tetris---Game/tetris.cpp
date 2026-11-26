@@ -199,3 +199,25 @@ void drawGame(sf::RenderWindow& window) {
 
     window.display();
 }
+
+// main: window, then the game loop: input, update, draw
+
+int main() {
+    srand((unsigned)time(0));
+
+    sf::RenderWindow window(sf::VideoMode({ 520, 640 }), "Tetris");
+    window.setFramerateLimit(60);                  // same speed on every laptop
+
+    if (!font.openFromFile("C:/Windows/Fonts/arial.ttf") && !font.openFromFile("arial.ttf")) {
+        cout << "Could not load a font. Copy arial.ttf next to the code.\n";
+        return 1;
+    }
+    piecesOk = loadPieces();
+
+    while (window.isOpen()) {
+        //handleInput(window);
+        //updateGame();
+        drawGame(window);
+    }
+    return 0;
+}
