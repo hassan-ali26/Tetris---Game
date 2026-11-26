@@ -102,6 +102,17 @@ bool loadPieces() {
     return !fin.fail();                            // false if the file was short
 }
 
+
+// drawPiece: the falling piece on top of the board
+
+void drawPiece(sf::RenderWindow& window) {
+    for (int r = 0; r < 4; r++)
+        for (int c = 0; c < 4; c++)
+            if (shape[r][c] == '#')
+                drawBlock(window, BOARD_X + (pieceCol + c) * CELL,
+                    BOARD_Y + (pieceRow + r) * CELL, CELL, colors[currentPiece + 1]);
+}
+
 // readEvents: read the window events and keep the pressed key in pressedKey
 
 void readEvents(sf::RenderWindow& window) {
