@@ -171,3 +171,31 @@ void drawPiece(sf::RenderWindow& window) {
                 drawBlock(window, BOARD_X + (pieceCol + c) * CELL,
                     BOARD_Y + (pieceRow + r) * CELL, CELL, colors[currentPiece + 1]);
 }
+
+// drawGame: the draw step of the game loop
+
+void drawGame(sf::RenderWindow& window) {
+    window.clear(sf::Color(15, 15, 30));
+
+    if (!piecesOk) {                               // pieces.txt is missing: show an error
+        drawText(window, "ERROR", 180, 200, 48, sf::Color::Red);
+        drawText(window, "Could not read pieces.txt", 120, 280, 24, sf::Color::White);
+    }
+    else {
+        switch (gameState) {
+        case MENU:
+            //drawMenu(window);
+            break;
+        case PLAYING:
+            drawBoard(window);
+            drawPiece(window);
+            //drawSidePanel(window);
+            break;
+        case GAME_OVER:
+            //drawGameOver(window);
+            break;
+        }
+    }
+
+    window.display();
+}
